@@ -1,4 +1,5 @@
 import type { EffectKind, Milestone } from '$lib/types';
+import { PLAYER_NAME_TOKEN } from './player-name';
 
 const msg = (
   text: string,
@@ -186,7 +187,7 @@ export const MILESTONES: Milestone[] = [
     effect: steps(
       { kind: 'setFlag', flag: 'gameOver', value: true },
       { kind: 'addBodyClass', className: 'bg-chaos' },
-      { kind: 'delay', ms: 600, then: msg("tu voulais un défi, Lucas ?<br>tu l'as.<br><br><span class=\"faint\">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>", { duration: 0 }) },
+      { kind: 'delay', ms: 600, then: msg(`tu voulais un défi, ${PLAYER_NAME_TOKEN} ?<br>tu l'as.<br><br><span class="faint">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>`, { duration: 0 }) },
     ),
   },
 ];
