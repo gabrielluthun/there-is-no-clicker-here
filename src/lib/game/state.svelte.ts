@@ -8,7 +8,9 @@ const base = loaded ? fromSaveState(loaded) : createInitialRuntimeState();
 export const gameState = $state(base);
 
 // Derived lookup used by unlock checks; avoids O(n) includes everywhere.
-export const unlockedSet = $derived(new Set(gameState.unlocked));
+const unlockedSet = $derived(new Set(gameState.unlocked));
+
+export const isUnlocked = (id: string): boolean => unlockedSet.has(id);
 
 export const hydrateVisitMetadata = (): void => {
   gameState.visits += 1;
@@ -21,7 +23,7 @@ export const incrementClicks = (): void => {
 };
 
 export const unlock = (id: string): boolean => {
-  if (unlockedSet.has(id)) return false;
+  if (isUnlocked(id)) return false;
   // Immutable array write keeps updates explicit and traceable.
   gameState.unlocked = [...gameState.unlocked, id];
   return true;
