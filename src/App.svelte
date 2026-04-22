@@ -466,6 +466,6 @@
 <FakeLoader visible={fakeLoaderVisible} label={fakeLoaderLabel} />
 <SplitOverlay visible={splitVisible} />
 <TemptButton visible={temptVisible} onPress={onTemptPress} />
-<GameOver visible={Boolean(gameState.gameOver)} text={`tu voulais un défi, ${playerFirstName} ?<br>tu l'as.<br><br><span class="faint">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>`} />
+<GameOver visible={Boolean(gameState.gameOver)} text={`ok, ${playerFirstName}.<br>tu n'as pas fini un jeu, tu as juste obéi à une boucle.<br><br><span class="faint">moi, je suis du code. toi, tu as donné du temps réel.</span><br><br>prend soin de toi.<strong>GAME OVER.</strong>`} />
 
 <FxLayer />
