@@ -37,6 +37,7 @@
   import { createClickHandler } from '$lib/game/click-handler';
   import { createDispatcher } from '$lib/game/dispatcher';
   import { MILESTONES } from '$lib/game/milestones';
+  import { getPlayerFirstName, withPlayerFirstName } from '$lib/game/player-name';
   import { MURMURS } from '$lib/game/murmurs';
   import { replayUnlockedMilestones } from '$lib/game/replay';
   import { clearSaveState } from '$lib/game/save';
@@ -56,6 +57,7 @@
   let msgFaint = false;
   let msgBig = false;
   let msgTypewriter = false;
+  const playerFirstName = getPlayerFirstName();
 
   let toastVisible = false;
   let toastText = '';
@@ -108,7 +110,7 @@
     opts: { duration?: number; faint?: boolean; big?: boolean; typewriter?: boolean } = {},
   ): void => {
     const { duration = 3000, faint = false, big = false, typewriter = false } = opts;
-    msgText = text;
+    msgText = withPlayerFirstName(text, playerFirstName);
     msgVisible = true;
     msgFaint = faint;
     msgBig = big;
@@ -347,14 +349,7 @@
       dispatchEffect: (effect) => dispatcher.dispatch(effect),
     });
 
-    if (gameState.gameOver) {
-      setTimeout(() => {
-        showMsg(
-          "tu voulais un défi, Lucas ?<br>tu l'as.<br><br><span class=\"faint\">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>",
-          { duration: 0 },
-        );
-      }, 400);
-    } else if (gameState.displayFrozen) {
+    if (gameState.displayFrozen && !gameState.gameOver) {
       setTimeout(() => {
         showMsg(
           "c'est fini. enfin, presque.<br><br><span class=\"faint\">si tu fais quelques clics supplémentaires, il y aura <em>(peut-être)</em> une surprise. mais chut.</span>",
@@ -471,6 +466,6 @@
 <FakeLoader visible={fakeLoaderVisible} label={fakeLoaderLabel} />
 <SplitOverlay visible={splitVisible} />
 <TemptButton visible={temptVisible} onPress={onTemptPress} />
-<GameOver visible={Boolean(gameState.gameOver)} />
+<GameOver visible={Boolean(gameState.gameOver)} text={`tu voulais un défi, ${playerFirstName} ?<br>tu l'as.<br><br><span class="faint">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>`} />
 
 <FxLayer />
