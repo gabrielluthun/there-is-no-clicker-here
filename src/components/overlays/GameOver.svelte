@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { PLAYER_NAME_TOKEN } from '$lib/game/player-name';
+
   export let visible = false;
   export let text =
-    "tu voulais un défi, Lucas ?<br>tu l'as.<br><br><span class=\"faint\">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>";
+    `tu voulais un défi, ${PLAYER_NAME_TOKEN} ?<br>tu l'as.<br><br><span class="faint">maintenant, évalue le jeu.</span><br><br>bisous.<br><br><strong>GAME OVER.</strong>`;
 </script>
 
 {#if visible}
