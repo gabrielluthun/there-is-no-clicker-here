@@ -76,4 +76,22 @@ describe('dispatcher', () => {
     expect(ctx.showToast).not.toHaveBeenCalled();
     expect(ctx.confetti).not.toHaveBeenCalled();
   });
+
+  it('auto-removes body class when duration is provided', () => {
+    const ctx = makeCtx();
+    const scheduled: Array<{ delay: number; run: () => void }> = [];
+    ctx.schedule = (delay, run) => {
+      scheduled.push({ delay, run });
+    };
+    const dispatcher = createDispatcher(ctx);
+
+    dispatcher.dispatch({ kind: 'addBodyClass', className: 'inverted', durationMs: 1400 });
+
+    expect(ctx.addBodyClass).toHaveBeenCalledWith('inverted');
+    expect(scheduled).toHaveLength(1);
+    expect(scheduled[0].delay).toBe(1400);
+
+    scheduled[0].run();
+    expect(ctx.removeBodyClass).toHaveBeenCalledWith('inverted');
+  });
 });
