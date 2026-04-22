@@ -1,0 +1,501 @@
+/* -------- Global body modes + keyframes --------
+ * Styles propres aux composants vivent dans leur composant Svelte.
+ * Ici : animations globales et modes appliqués à <body>.
+ */
+
+/* --- Shake / flash --- */
+
+body.screenshake {
+  animation: bigshake 0.3s;
+}
+
+@keyframes bigshake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4px, 2px);
+  }
+  40% {
+    transform: translate(4px, -2px);
+  }
+  60% {
+    transform: translate(-3px, -2px);
+  }
+  80% {
+    transform: translate(3px, 2px);
+  }
+}
+
+body.flash-red {
+  animation: flashred 0.4s;
+}
+
+@keyframes flashred {
+  0%,
+  100% {
+    background: var(--bg);
+  }
+  50% {
+    background: var(--danger);
+  }
+}
+
+body.flash-white {
+  animation: flashwhite 0.2s;
+}
+
+@keyframes flashwhite {
+  0%,
+  100% {
+    background: var(--bg);
+  }
+  50% {
+    background: white;
+  }
+}
+
+/* --- Visual modes --- */
+
+body.inverted {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+body.rotated {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body.pulse {
+  animation: pulse-bg 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse-bg {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.4);
+  }
+}
+
+/* --- Backgrounds --- */
+
+body.bg-gradient {
+  background: linear-gradient(135deg, #0a0a0c 0%, #1a1030 100%);
+}
+
+body.bg-warm {
+  background: linear-gradient(135deg, #0a0a0c 0%, #3a1020 100%);
+}
+
+body.bg-cold {
+  background: linear-gradient(135deg, #030310 0%, #001030 100%);
+}
+
+body.bg-chaos {
+  background: linear-gradient(135deg, #3a0040 0%, #400040 50%, #001a40 100%);
+  animation: hueshift 10s linear infinite;
+}
+
+@keyframes hueshift {
+  from {
+    filter: hue-rotate(0deg);
+  }
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* --- Custom cursors --- */
+
+body.cursor-banana {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>🍌</text></svg>")
+      16 16,
+    pointer;
+}
+
+body.cursor-fly {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>🪰</text></svg>")
+      16 16,
+    pointer;
+}
+
+body.cursor-eye {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>👁</text></svg>")
+      16 16,
+    pointer;
+}
+
+/* --- Wobble mode (applies to stage + message) --- */
+
+body.wobble #stage,
+body.wobble #msg {
+  animation: wobble 3s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(calc(-50% - 4px), -50%) rotate(-1deg);
+  }
+  75% {
+    transform: translate(calc(-50% + 4px), -50%) rotate(1deg);
+  }
+}
+
+/* --- Dance mode (applies to stage children + critters + plant) --- */
+
+body.dance #stage > *,
+body.dance .critter,
+body.dance .plant {
+  animation: dance 0.6s ease-in-out infinite !important;
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+/* --- Breathing mode --- */
+
+body.breathing #stage {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* --- Ghost mode --- */
+
+body.ghost-mode #stage > *:not(.star):not(.snowflake):not(.rain-drop) {
+  opacity: 0.35;
+  transition: opacity 1s ease;
+}
+
+/* --- Game over mode --- */
+
+body.game-over {
+  cursor: default !important;
+}
+
+body.game-over #stage,
+body.game-over #counter,
+body.game-over #achievements-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 1.8s ease;
+}
+
+body.game-over #msg {
+  top: 50% !important;
+  color: var(--fg);
+  font-size: clamp(16px, 3vh, 26px);
+}
+
+body.game-over #msg strong {
+  display: inline-block;
+  margin-top: 4px;
+  letter-spacing: 6px;
+  color: var(--danger);
+  font-size: 1.2em;
+}
+
+/* --- Utility --- */
+
+.hidden {
+  display: none !important;
+}
+
+/* --- Shake on click (shared) --- */
+
+.shake-on-click {
+  animation: shake 0.2s;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2px, 1px);
+  }
+  50% {
+    transform: translate(2px, -1px);
+  }
+  75% {
+    transform: translate(-1px, 2px);
+  }
+}
+
+/* --- Shared entity animations (referenced from multiple components) --- */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* --- Fx shared keyframes (consumed by FxLayer items) --- */
+
+@keyframes ripple-anim {
+  0% {
+    width: 8px;
+    height: 8px;
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes clic-rise {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80px);
+  }
+}
+
+@keyframes emoji-fly {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -140px) scale(1.2) rotate(180deg);
+  }
+}
+
+@keyframes shockwave-anim {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes trail-fade {
+  0% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+}
+
+@keyframes rain-fall {
+  from {
+    transform: translateY(-10vh);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes snow-fall {
+  from {
+    transform: translateY(-10vh) translateX(0);
+  }
+  to {
+    transform: translateY(110vh) translateX(40px);
+  }
+}
+
+@keyframes comet-fly {
+  from {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(110vw, -30vh);
+    opacity: 0;
+  }
+}
+
+@keyframes heart-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80vh) scale(1.2);
+  }
+}
+
+@keyframes plant-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(200vh);
+  }
+}
+
+@keyframes popin {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fadeout {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes split-flash {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes err-glitch {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) skewX(0deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-52%, -50%) skewX(6deg);
+  }
+  40% {
+    transform: translate(-48%, -50%) skewX(-6deg);
+  }
+  60% {
+    transform: translate(-51%, -50%) skewX(3deg);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes loader-fill {
+  0% {
+    width: 0%;
+  }
+  60% {
+    width: 95%;
+  }
+  90% {
+    width: 95%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes tempt-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  15%,
+  85% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+}
